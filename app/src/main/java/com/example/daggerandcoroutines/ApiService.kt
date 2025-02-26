@@ -11,7 +11,7 @@ interface ApiService {
     suspend fun fetchData(): Response<List<Country>>*/
 
     @FormUrlEncoded
-    @POST("EndUrl")
+    @POST("v1_data_model/courses/home/get_all_events")
     suspend fun getEventUpcommingListData(
         @Field("user_id") userId: String,
         @Field("city_id") cityId: String,

@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     Status.SUCCESS -> {
+
                         Toast.makeText(this@MainActivity,
                             it.data!!.data?.cat_wise_event_list?.get(0)?.name, Toast.LENGTH_LONG
                         ).show()

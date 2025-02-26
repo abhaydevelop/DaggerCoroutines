@@ -1,6 +1,5 @@
 package com.example.daggerandcoroutines
 
-
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,6 +15,9 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
+    fun providesUrl() = Constants.baseUrl
+
+    @Provides
     @Singleton
     fun provideHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
@@ -27,9 +29,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideRetrofit(okHttpClient: OkHttpClient , url: String ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("BaseUrl")
+            .baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

@@ -10,6 +10,10 @@ android {
     compileSdk = 34
 
     defaultConfig {
+
+        ndk {
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+        }
         applicationId = "com.example.daggerandcoroutines"
         minSdk = 26
         targetSdk = 34
@@ -22,9 +26,26 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            isDebuggable = false
+            isShrinkResources = false
+
+            buildConfigField("String", "BASE_URL", project.findProperty("PROD_BASE_URL") as String? ?: "")
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
+                "proguard-rules-epubear.pro"
+            )
+        }
+        debug {
+            isMinifyEnabled = false
+            isDebuggable = false
+            buildConfigField("String", "BASE_URL", project.findProperty("QA_BASE_URL") as String? ?: "")
+            signingConfig = signingConfigs.getByName("debug")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+                "proguard-rules-epubear.pro"
             )
         }
     }
@@ -39,6 +60,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
